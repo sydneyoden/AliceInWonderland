@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="toolbar">
+        <button onclick="selectTool('pencil')">Pencil</button>
+        <button onclick="selectTool('eraser')">Eraser</button>
+        <img src="src/icon1.png" alt="Icon 1" draggable="true" ondragstart="drag(event)">
+        <img src="src/icon2.png" alt="Icon 2" draggable="true" ondragstart="drag(event)">
+        <img src="src/icon3.png" alt="Icon 3" draggable="true" ondragstart="drag(event)">
+        <img src="src/icon4.png" alt="Icon 4" draggable="true" ondragstart="drag(event)">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
