@@ -9,7 +9,13 @@
 <body>
     <canvas id="canvas"></canvas>
     <div class="toolbar">
-        <button onclick="selectTool('pencil')">Pencil</button>
+        <div class="dropdown">
+            <button onclick="toggleDropdown(), selectTool('pencil')" class="dropbtn">Pencil</button>
+            <div id="pencilDropdown" class="dropdown-content">
+                <input type="color" id="colorPicker" value="#000000" onchange="updateStorkeColor()">
+                <input type="number" id="thicknessPicker" min="1" max="10" value="3" onchange="updateStrokeSize()">
+            </div>
+        </div>
         <button onclick="selectTool('eraser')">Eraser</button>
         <button onclick="selectTool('move')">Move</button>
         <button onclick="openImagePanel()">Images</button>

@@ -9,23 +9,28 @@ let tool = 'pencil';
 let isDrawing = false;
 let isDragging = false;
 
+let strokeColor = '#000';
+let strokeSize = 3;
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+imagePanel.style.display = 'none';
 
 //array of images
 let offsetX, offsetY;
 let images = []; // Array to store images
 
 // Load images
-let imgSources = ['src/icon1.png', 'src/icon2.png', 'src/icon3.png', 'src/icon4.png'];
-imgSources.forEach(src => {
-    let img = new Image();
-    img.onload = function() {
-        images.push({ element: img, x: 0, y: 0, width: img.width, height: img.height });
-        redrawCanvas();
-    };
-    img.src = src;
-});
+// let imgSources = ['src/icon1.png', 'src/icon2.png', 'src/icon3.png', 'src/icon4.png'];
+// imgSources.forEach(src => {
+//     let img = new Image();
+//     img.onload = function() {
+//         images.push({ element: img, x: 0, y: 0, width: img.width, height: img.height });
+//         redrawCanvas();
+//     };
+//     img.src = src;
+// });
 
 function selectTool(selectedTool) {
     tool = selectedTool;
@@ -119,9 +124,9 @@ function draw(e) {
     //console.log("draw");
     if (!isDrawing) return
     if (tool === 'pencil') {
-        ctx.lineWidth = 3; //ctx.lineWidth = strokeSize;
+        ctx.lineWidth = strokeSize; //ctx.lineWidth = strokeSize;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000'; //ctx.strokeStyle = strokeColor;
+        ctx.strokeStyle = strokeColor; //ctx.strokeStyle = strokeColor;
     } else if (tool === 'eraser') {
         ctx.lineWidth = 10; //ctx.lineWidth = strokeSize;
         ctx.lineCap = 'round';
@@ -176,7 +181,40 @@ function openImagePanel() {
     const imagePanel = document.getElementById('imagePanel');
     if (imagePanel.style.display === 'none') {
         imagePanel.style.display = 'block';
+        //console.log("==none");
     } else {
         imagePanel.style.display = 'none';
+        console.log("closing");
     }
+}
+
+
+
+
+function toggleDropdown() {
+    var dropdown = document.getElementById("pencilDropdown");
+    dropdown.classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
+
+function updateStorkeColor() {
+    strokeColor = document.getElementById('colorPicker').value;
+}
+
+function updateStrokeSize() {
+    strokeSize = document.getElementById('thicknessPicker').value;
 }
