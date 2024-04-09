@@ -5,24 +5,40 @@ body {
 }
 
 .container {
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
     text-align: center;
     margin-top: 50px;
+    max-width: 50%;
+}
+
+.container input[type="text"] {
+    width: 50%; /* Make the input element fill the entire width of the container */
+    padding: 10px; /* Add padding for spacing inside the input element */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
 button {
-    margin: 10px;
-    min-width: 300px;
+    min-width: 285px;
+    margin-bottom: 10px;
+    height: 50px; /* Adjust the height as desired */
+    font-family: 'Kristen ITC', cursive; /* Change the font family */
+    font-size: 20px; /* Change the font size */
 }
 
 canvas {
     border: 1px solid #000;
     display: block;
-    margin: 0 auto;
-    /* width: 80%;
-    height: 60%; */
+    margin-left: 20%;
+    margin-top: 1%;
+    width: 79%; /* Set the width using a percentage */
+    height: 780px;
 }
 
 .toolbar {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 10px;
     left: 10px;
