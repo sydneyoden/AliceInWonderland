@@ -1,11 +1,20 @@
 body {
-    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items vertically */
     margin: 0;
     padding: 0;
+    background-color: #d1c1da;
+}
+
+h1 {
+    font-size: 100px;
+    text-align: center; /* Center the text */
+    color: #504357; /* Dark purple color (indigo) */
+    font-family: "Kristen ITC", cursive; /* Kristen ITC cursive font */
 }
 
 .container {
-    margin-left: 5%;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -20,28 +29,31 @@ body {
 }
 
 button {
-    min-width: 285px;
+    min-width: 80px;
     margin-bottom: 10px;
     height: 50px; /* Adjust the height as desired */
     font-family: 'Kristen ITC', cursive; /* Change the font family */
     font-size: 20px; /* Change the font size */
+    color: #504357;
+    background-color: #d1c1da;
+}
+
+.button-home {
+    display: block; /* Allow the button to be centered horizontally */
 }
 
 canvas {
-    border: 1px solid #000;
     display: block;
-    margin-left: 20%;
-    margin-top: 1%;
-    width: 79%; /* Set the width using a percentage */
-    height: 780px;
 }
 
 .toolbar {
+    min-height: 1000px;
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0px;
+    left: 0px;
+    background-color: #504357;
 }
 
 .toolbar button {
@@ -54,11 +66,14 @@ img {
 }
 
 .image-panel {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    margin-top: 152px;
+    margin-left: 13px;
     position: absolute;
     top: 100px;
     left: 0;
-    width: 200px;
+    width: 260px;
     padding: 10px;
     background-color: #ffffff;
     border: 1px solid #ccc;

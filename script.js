@@ -157,11 +157,9 @@ canvas.addEventListener('dragover', function(e) {
 canvas.addEventListener('drop', function(e) {
     //console.log("in drop event lis");
     e.preventDefault();
-    let data = e.dataTransfer.getData('text');
+    let data = e.dataTransfer.getData('text'); //final
     
-    //let data = e.getData(src);
-    //let data = "src/icon1.png"; //WORKS
-    //let data = e.getData(src);
+    //let data = "src/gif1.gif"; //WORKS
     
     console.log("data " + data);
     let imgSrc = data; // Assuming data contains the image source
