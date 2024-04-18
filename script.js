@@ -38,11 +38,11 @@ function goToDrawingPage(event) {
 
     // Determine the appropriate image source based on the button's class
     if (buttonClass === 'button-home1') {
-        imageSource = 'src/IMG_2301.png';
+        imageSource = 'src/park.jpeg';
     } else if (buttonClass === 'button-home2') {
         imageSource = 'src/IMG_2301.png';
     } else if (buttonClass === 'button-home3') {
-        imageSource = 'src/IMG_2301.png';
+        imageSource = 'src/office.jpeg';
     }
     if (imageSource) {
         window.location.href = `drawing.html?bgImage=${encodeURIComponent(imageSource)}`;
@@ -93,6 +93,11 @@ let images = []; // Array to store images
 //     };
 //     img.src = src;
 // });
+
+function goToIndexPage() {
+    // Navigate back to index.html
+    window.location.href = 'index.html';
+}
 
 function selectTool(selectedTool) {
     tool = selectedTool;

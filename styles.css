@@ -47,6 +47,9 @@ button {
 .button-home3 {
     display: block; /* Allow the button to be centered horizontally */
 }
+.backButton {
+    bottom: 20px; /* Positions the button 20px from the bottom of the sidebar */
+}
 
 canvas {
     display: block;

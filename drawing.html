@@ -9,7 +9,7 @@
 <body>
     <canvas id="canvas"></canvas>
     <div class="toolbar">
-        <button onclick="selectTool('dream')">Dream!</button>
+        <button class="backButton" onclick="goToIndexPage()">Back</button>
         <div class="dropdown">
             <button onclick="toggleDropdown(), selectTool('pencil')" class="dropbtn">Pencil</button>
             <div id="pencilDropdown" class="dropdown-content">
@@ -19,7 +19,7 @@
         </div>
         <button onclick="selectTool('eraser')">Eraser</button>
         <button onclick="openImagePanel()">Images</button>
-        
+        <button onclick="selectTool('dream')">Dream!</button>
     </div>
     <div id="imagePanel" class="image-panel">
         <img src="src/crown.png" alt="Icon 1" draggable="true" ondragstart="drag(event)">
