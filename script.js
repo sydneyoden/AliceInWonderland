@@ -42,7 +42,7 @@ function goToDrawingPage(event) {
     } else if (buttonClass === 'button-home2') {
         imageSource = 'src/IMG_2301.png';
     } else if (buttonClass === 'button-home3') {
-        imageSource = 'src/office.jpeg';
+        imageSource = 'src/office.png';
     }
     if (imageSource) {
         window.location.href = `drawing.html?bgImage=${encodeURIComponent(imageSource)}`;
