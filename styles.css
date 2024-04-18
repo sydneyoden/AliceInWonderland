@@ -11,7 +11,7 @@ h1 {
     font-size: 100px;
     text-align: center; /* Center the text */
     color: #504357; /* Dark purple color (indigo) */
-    font-family: "Kristen ITC", cursive; /* Kristen ITC cursive font */
+    font-family: 'Kristen ITC', cursive; /* Kristen ITC cursive font */
 }
 
 .container {
@@ -29,7 +29,7 @@ h1 {
 }
 
 button {
-    min-width: 80px;
+    min-width: 100px;
     margin-bottom: 10px;
     height: 50px; /* Adjust the height as desired */
     font-family: 'Kristen ITC', cursive; /* Change the font family */
@@ -75,22 +75,27 @@ img {
 }
 
 .image-panel {
-    display: flex;
-    flex-direction: column;
+    display: grid; /* Set the container to use a grid layout */
+    grid-template-columns: repeat(3, 50px); /* Create 3 columns with a fixed width of 50px each */
+    grid-auto-rows: 50px;
+    gap: 10px; /* Gap between grid items */
     margin-top: 152px;
     margin-left: 13px;
     position: absolute;
     top: 100px;
     left: 0;
-    width: 260px;
+    width: 215px; /* Adjust the width as needed */
+    height: 150px;
     padding: 10px;
-    background-color: #ffffff;
+    background-color: #ded6ea;
     border: 1px solid #ccc;
 }
 
 .image-panel img {
-    display: block;
-    margin-bottom: 10px;
+    /* display: block; */
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
 }
 
 
