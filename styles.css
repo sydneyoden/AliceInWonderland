@@ -38,7 +38,13 @@ button {
     background-color: #d1c1da;
 }
 
-.button-home {
+.button-home1 {
+    display: block; /* Allow the button to be centered horizontally */
+}
+.button-home2 {
+    display: block; /* Allow the button to be centered horizontally */
+}
+.button-home3 {
     display: block; /* Allow the button to be centered horizontally */
 }
 

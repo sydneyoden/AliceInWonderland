@@ -1,7 +1,63 @@
-function goToDrawingPage() {
-    //console.log("in goToDrawingPage()");
-    window.location.href = "drawing.html";
+function loadCanvasBackground(imageSrc) {
+    // Create a new Image object
+    const image = new Image();
+    image.src = imageSrc;
+
+    // Once the image is loaded, draw it onto the canvas
+    image.onload = function() {
+        // Optionally, you can resize the image to fit the canvas while maintaining its aspect ratio
+        const canvasAspect = canvas.width / canvas.height;
+        const imageAspect = image.width / image.height;
+        let drawWidth, drawHeight;
+
+        if (imageAspect > canvasAspect) {
+            // Image is wider than canvas
+            drawWidth = canvas.width;
+            drawHeight = canvas.width / imageAspect;
+        } else {
+            // Image is taller than canvas
+            drawHeight = canvas.height;
+            drawWidth = canvas.height * imageAspect;
+        }
+
+        // Calculate the drawing position to center the image on the canvas
+        const x = (canvas.width - drawWidth) / 2;
+        const y = (canvas.height - drawHeight) / 2;
+
+        // Draw the image as the background on the canvas
+        ctx.drawImage(image, x, y, drawWidth, drawHeight);
+    };
 }
+
+function goToDrawingPage(event) {
+    //console.log("in goToDrawingPage()");
+    const buttonClass = event.target.className; // Get the class name of the button
+    
+    // Initialize the image source variable
+    let imageSource;
+
+    // Determine the appropriate image source based on the button's class
+    if (buttonClass === 'button-home1') {
+        imageSource = 'src/IMG_2301.png';
+    } else if (buttonClass === 'button-home2') {
+        imageSource = 'src/IMG_2301.png';
+    } else if (buttonClass === 'button-home3') {
+        imageSource = 'src/IMG_2301.png';
+    }
+    if (imageSource) {
+        window.location.href = `drawing.html?bgImage=${encodeURIComponent(imageSource)}`;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const imageSource = urlParams.get('bgImage');
+
+    // Check if imageSource is valid and load the background image
+    if (imageSource) {
+        loadCanvasBackground(imageSource);
+    }
+});
 
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
@@ -16,6 +72,12 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 imagePanel.style.display = 'none';
+
+// For example, you can call the function when the document is ready or when a specific button is clicked
+// document.addEventListener('DOMContentLoaded', () => {
+//     const imageSource = 'src/IMG_2301.png'; // Specify the image source
+//     loadCanvasBackground(imageSource);
+// });
 
 //array of images
 let offsetX, offsetY;
@@ -130,7 +192,7 @@ function draw(e) {
     } else if (tool === 'eraser') {
         ctx.lineWidth = 10; //ctx.lineWidth = strokeSize;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = '#fff'; //ctx.strokeStyle = canvasColor;
+        ctx.strokeStyle = '#d1c1da'; //ctx.strokeStyle = canvasColor;
     }
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
@@ -167,11 +229,28 @@ canvas.addEventListener('drop', function(e) {
     img.src = imgSrc;
 
     img.onload = function() {
-        //console.log("in img.onload");
+        // Calculate the drop location relative to the canvas
         let rect = canvas.getBoundingClientRect();
-        let x = e.clientX - rect.left;
-        let y = e.clientY - rect.top;
+        let dropX = e.clientX - rect.left;
+        let dropY = e.clientY - rect.top;
+
+        // Calculate the top-left corner position of the image so its center aligns with the drop location
+        let imgCenterX = img.width / 2;
+        let imgCenterY = img.height / 2;
+        let x = dropX - imgCenterX;
+        let y = dropY - imgCenterY;
+
+        // Draw the image on the canvas at the calculated position
         ctx.drawImage(img, x, y, img.width, img.height);
+
+        // Optionally, you can add the image object to the images array for managing its position later
+        images.push({
+            element: img,
+            x: x,
+            y: y,
+            width: img.width,
+            height: img.height
+        });
     };
 });
 
