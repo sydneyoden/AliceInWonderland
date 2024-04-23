@@ -44,6 +44,9 @@ function goToDrawingPage(event) {
     } else if (buttonClass === 'button-home3') {
         imageSource = 'src/office.png';
     }
+    else if (buttonClass === 'button-home4') {
+        imageSource = 'src/white_bg.jpeg';
+    }
     if (imageSource) {
         window.location.href = `drawing.html?bgImage=${encodeURIComponent(imageSource)}`;
     }
