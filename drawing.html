@@ -1,41 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drawing Page</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <canvas id="canvas"></canvas>
     <div class="toolbar">
-        <button class="backButton" onclick="goToIndexPage()">Back</button>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(), selectTool('pencil')" class="dropbtn">Pencil</button>
-            <div id="pencilDropdown" class="dropdown-content">
-                <input type="color" id="colorPicker" value="#000000" onchange="updateStorkeColor()">
-                <input type="number" id="thicknessPicker" min="1" max="10" value="3" onchange="updateStrokeSize()">
-            </div>
+      <button class="backButton" onclick="goToIndexPage()">Back</button>
+      <div class="dropdown">
+        <button
+          onclick="toggleDropdown(), selectTool('pencil')"
+          class="dropbtn"
+        >
+          Pencil
+        </button>
+        <div id="pencilDropdown" class="dropdown-content">
+          <input
+            type="color"
+            id="colorPicker"
+            value="#000000"
+            onchange="updateStorkeColor()"
+          />
+          <input
+            type="number"
+            id="thicknessPicker"
+            min="1"
+            max="10"
+            value="3"
+            onchange="updateStrokeSize()"
+          />
         </div>
-        <button onclick="selectTool('eraser')">Eraser</button>
-        <button onclick="openImagePanel()">Images</button>
-        <button onclick="selectTool('dream')">Dream!</button>
+      </div>
+      <button onclick="selectTool('eraser')">Eraser</button>
+      <button onclick="openImagePanel()">Images</button>
+      <button onclick="selectTool('dream')">Dream!</button>
     </div>
     <div id="imagePanel" class="image-panel">
-        <img src="src/crown.png" alt="Icon 1" draggable="true" ondragstart="drag(event)">
-        <img src="src/feather1.png" alt="Icon 2" draggable="true" ondragstart="drag(event)">
-        <img src="src/feather2.png" alt="Icon 3" draggable="true" ondragstart="drag(event)">
-        <img src="src/feather3.png" alt="Icon 4" draggable="true" ondragstart="drag(event)">
-        <img src="src/potion1.png" alt="Icon 5" draggable="true" ondragstart="drag(event)">
-        <img src="src/potion2.png" alt="Icon 6" draggable="true" ondragstart="drag(event)">
-        <img src="src/spadeCardMan.png" alt="Icon 7" draggable="true" ondragstart="drag(event)">
-        <img src="src/portal.png" alt="Icon 8" draggable="true" ondragstart="drag(event)">
-        <img src="src/fairy.png" alt="Icon 9" draggable="true" ondragstart="drag(event)">
-        <img src="src/heartCardMan.png" alt="Icon 10" draggable="true" ondragstart="drag(event)">
-        <img src="src/diamondCardMan.png" alt="Icon 11" draggable="true" ondragstart="drag(event)">
-        <img src="src/clubCardMan.png" alt="Icon 12" draggable="true" ondragstart="drag(event)">
+      <img
+        src="src/crown.png"
+        alt="Icon 1"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/feather1.png"
+        alt="Icon 2"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/feather2.png"
+        alt="Icon 3"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/feather3.png"
+        alt="Icon 4"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/potion1.png"
+        alt="Icon 5"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/potion2.png"
+        alt="Icon 6"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/spadeCardMan.png"
+        alt="Icon 7"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/portal.png"
+        alt="Icon 8"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/fairy.png"
+        alt="Icon 9"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/heartCardMan.png"
+        alt="Icon 10"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/diamondCardMan.png"
+        alt="Icon 11"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/clubCardMan.png"
+        alt="Icon 12"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/baloon_dog.png"
+        alt="Icon 13"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/cake.png"
+        alt="Icon 14"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/purp_balloon.png"
+        alt="Icon 15"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/rabbit.png"
+        alt="Icon 16"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
+      <img
+        src="src/two_baloons.png"
+        alt="Icon 17"
+        draggable="true"
+        ondragstart="drag(event)"
+      />
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
