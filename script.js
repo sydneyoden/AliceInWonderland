@@ -1,44 +1,30 @@
 var drawingData = null;
 
+// loads image into canvas
 function loadCanvasBackground(imageSrc) {
-    // Create a new Image object
     const image = new Image();
     image.src = imageSrc;
-
-    // Once the image is loaded, draw it onto the canvas
     image.onload = function() {
-        // Optionally, you can resize the image to fit the canvas while maintaining its aspect ratio
         const canvasAspect = canvas.width / canvas.height;
         const imageAspect = image.width / image.height;
         let drawWidth, drawHeight;
-
         if (imageAspect > canvasAspect) {
-            // Image is wider than canvas
             drawWidth = canvas.width;
             drawHeight = canvas.width / imageAspect;
         } else {
-            // Image is taller than canvas
             drawHeight = canvas.height;
             drawWidth = canvas.height * imageAspect;
         }
-
-        // Calculate the drawing position to center the image on the canvas
         const x = (canvas.width - drawWidth) / 2;
         const y = (canvas.height - drawHeight) / 2;
-
-        // Draw the image as the background on the canvas
         ctx.drawImage(image, x, y, drawWidth, drawHeight);
     };
 }
 
+// function that opens drawing page
 function goToDrawingPage(event) {
-    //console.log("in goToDrawingPage()");
-    const buttonClass = event.target.className; // Get the class name of the button
-    
-    // Initialize the image source variable
+    const buttonClass = event.target.className;
     let imageSource;
-
-    // Determine the appropriate image source based on the button's class
     if (buttonClass === 'button-home1') {
         imageSource = 'src/park.png';
     } else if (buttonClass === 'button-home2') {
@@ -58,177 +44,126 @@ function goToDrawingPage(event) {
     }
 }
 
+// event listener for canvas loading
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const imageSource = urlParams.get('bgImage');
-
-    // Check if imageSource is valid and load the background image
     if (imageSource) {
         loadCanvasBackground(imageSource);
         loadStickerFromLocalStorage();
     }
-
-    // var stickerDataURL = localStorage.getItem('sticker');
-
-    // // Check if sticker data exists
-    // if (stickerDataURL) {
-    //     // Create an image element for the sticker
-    //     var sticker = new Image();
-    //     sticker.src = stickerDataURL;
-    //     sticker.width = 100; // Adjust size as needed
-    //     sticker.height = 100;
-    //     sticker.draggable = true;
-    //     localStorage.setItem('sticker', sticker);
-    //     sticker.addEventListener('dragstart', drag); // Set the drag event handler
-
-    //     // Add the sticker to the document
-    //     document.getElementById("imagePanel").appendChild(sticker);
-    // }
 });
 
+// important variables
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let tool = 'pencil';
 let isDrawing = false;
 let isDragging = false;
-
 let strokeColor = '#000';
 let strokeSize = 5;
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
 imagePanel.style.display = 'none';
-
-// For example, you can call the function when the document is ready or when a specific button is clicked
-// document.addEventListener('DOMContentLoaded', () => {
-//     const imageSource = 'src/IMG_2301.png'; // Specify the image source
-//     loadCanvasBackground(imageSource);
-// });
-
-//array of images
 let offsetX, offsetY;
-let images = []; // Array to store images
+let images = [];
 
-// Load images
-// let imgSources = ['src/icon1.png', 'src/icon2.png', 'src/icon3.png', 'src/icon4.png'];
-// imgSources.forEach(src => {
-//     let img = new Image();
-//     img.onload = function() {
-//         images.push({ element: img, x: 0, y: 0, width: img.width, height: img.height });
-//         redrawCanvas();
-//     };
-//     img.src = src;
-// });
-
+// function that opens main menu
 function goToIndexPage() {
-    // Navigate back to index.html
     window.location.href = 'index.html';
 }
 
+// function that selects button
 function selectTool(selectedTool) {
     tool = selectedTool;
 }
 
+// event listener for pressing down on the mouse
 canvas.addEventListener('mousedown', function(e) {
-    console.log("mouseDown");
     if (tool === 'pencil' || tool === 'eraser') {
         startDrawing(e);
-        //isDrawing = true;
-        //draw(e);
     } else if (tool === 'move') {
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-
-        // Check if the click is on any image
         for (let i = images.length - 1; i >= 0; i--) {
             const img = images[i];
             if (x > img.x && x < img.x + img.width && y > img.y && y < img.y + img.height) {
                 isDragging = true;
                 offsetX = x - img.x;
                 offsetY = y - img.y;
-                // Move the selected image to the end of the array so that it appears on top
                 images.splice(i, 1);
                 images.push(img);
                 break;
             }
         }
     }
-    
 });
 
+// event listener for moving the mouse
+// drawing and dragging
 canvas.addEventListener('mousemove', function(e) {
-    //console.log("mouseMove");
     if (isDrawing) {
         draw(e);
     }
-
     if (isDragging) {
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left - offsetX;
         const y = e.clientY - rect.top - offsetY;
-        const img = images[images.length - 1]; // Get the last image (the one being dragged)
+        const img = images[images.length - 1];
         img.x = x;
         img.y = y;
         redrawCanvas();
     }
 });
 
+// event listener for moving the mouse up
 canvas.addEventListener('mouseup', function(e) {
-    //console.log("mouseUp");
     if (tool === 'pencil' || tool === 'eraser') {
-        console.log("drawing STOPPED")
         stopDrawing(e);
         setTimeout(function() {
             drawingData = canvas.toDataURL("image/png");
-        }, 100); // Adjust delay time as needed
-        //isDrawing = false;
+        }, 100);
     } else if (tool == 'move') {
         isDragging = false;
         stopDrawing(e);
     }
 });
 
+// event listener for stopping mouse movement
 canvas.addEventListener('mouseleave', function(e) {
-    //console.log("mouseLeave");
     if (tool === 'pencil' || tool === 'eraser') {
         stopDrawing(e);
-        //isDrawing = false;
     } else if (tool == 'move') {
-        //isDragging = false;
-        //stopDrawing(e);
     }
 });
 
+// function for starting to draw
 function startDrawing (e) {
-    //console.log("startDrawing");
     isDrawing = true;
     ctx.beginPath();
     draw(e);
     ctx.beginPath();
 }
 
+// function for stopping drawing
 function stopDrawing (e) {
-    //console.log("stopDrawing");
     if (isDrawing === true) {
         isDrawing = false;
-        //ctx.endPath();
-        //this.saveState();
     }
 }
 
+// function for what happens during the draw phase
 function draw(e) {
-    //console.log("draw");
     if (!isDrawing) return
     if (tool === 'pencil') {
-        ctx.lineWidth = strokeSize; //ctx.lineWidth = strokeSize;
+        ctx.lineWidth = strokeSize;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = strokeColor; //ctx.strokeStyle = strokeColor;
+        ctx.strokeStyle = strokeColor;
     } else if (tool === 'eraser') {
-        ctx.lineWidth = 10; //ctx.lineWidth = strokeSize;
+        ctx.lineWidth = 10;
         ctx.lineCap = 'round';
-        ctx.strokeStyle = '#d1c1da'; //ctx.strokeStyle = canvasColor;
+        ctx.strokeStyle = '#d1c1da';
     }
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
@@ -236,50 +171,32 @@ function draw(e) {
     ctx.moveTo(e.offsetX, e.offsetY);
 }
 
-// Implement drag and drop functionality for images
+// function for dragging images
 function drag(e) {
-    //console.log("in drag()");
-    //console.log("e: " + e);
-
     e.dataTransfer.setData('text', e.target.src);
-    //console.log("dataTransfer: " + e.dataTransfer);
-    //console.log("getData: " + e.dataTransfer.getData('text'));
 }
 
+// event listener for dragging an image
 canvas.addEventListener('dragover', function(e) {
-    //console.log("in dragover event lis");
     e.preventDefault();
-    //let data = e.target.src;
 });
 
+// event listener for dropping an image
 canvas.addEventListener('drop', function(e) {
-    //console.log("in drop event lis");
     e.preventDefault();
-    let data = e.dataTransfer.getData('text'); //final
-    
-    //let data = "src/gif1.gif"; //WORKS
-    
-    console.log("data " + data);
-    let imgSrc = data; // Assuming data contains the image source
+    let data = e.dataTransfer.getData('text');
+    let imgSrc = data;
     let img = new Image();
     img.src = imgSrc;
-
     img.onload = function() {
-        // Calculate the drop location relative to the canvas
         let rect = canvas.getBoundingClientRect();
         let dropX = e.clientX - rect.left;
         let dropY = e.clientY - rect.top;
-
-        // Calculate the top-left corner position of the image so its center aligns with the drop location
         let imgCenterX = img.width / 2;
         let imgCenterY = img.height / 2;
         let x = dropX - imgCenterX;
         let y = dropY - imgCenterY;
-
-        // Draw the image on the canvas at the calculated position
         ctx.drawImage(img, x, y, img.width, img.height);
-
-        // Optionally, you can add the image object to the images array for managing its position later
         images.push({
             element: img,
             x: x,
@@ -290,45 +207,41 @@ canvas.addEventListener('drop', function(e) {
     };
 });
 
+// function opening the sticker/image panel
 function openImagePanel() {
     const imagePanel = document.getElementById('imagePanel');
     if (imagePanel.style.display === 'none') {
         imagePanel.style.display = 'block';
-        //console.log("==none");
     } else {
         imagePanel.style.display = 'none';
-        console.log("closing");
     }
 }
 
+// function that saves daydream as an image
 function saveCanvasAsImage() {
     const dataURL = canvas.toDataURL('image/png');
-
-    // Create a temporary link element
     const link = document.createElement('a');
-    link.href = dataURL; // Set the href to the data URL
-    link.download = "Your_Day_Dream"; // Specify the filename for the download;
-
-    // Programmatically trigger a click on the link to download the image
+    link.href = dataURL;
+    link.download = "Your_Day_Dream";
     link.click();
 }
 
+// event listener for clicking to save
 document.getElementById('saveButton').addEventListener('click', saveCanvasAsImage);
 
+// function toggling the dropdown sticker/image panel
 function toggleDropdown() {
     var dropdown = document.getElementById("pencilDropdown");
     dropdown.classList.toggle("show");
     if (pencilDropdown.style.display === 'none') {
         pencilDropdown.style.display = 'block';
-        //console.log("==none");
     } else {
         pencilDropdown.style.display = 'none';
-        console.log("closing");
     }
     
 }
 
-// Close the dropdown if the user clicks outside of it
+// Closes dropdown if the user clicks outside of it
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -342,104 +255,63 @@ window.onclick = function(event) {
     }
 }
 
-
+// function that updates pencil color
 function updateStorkeColor() {
     strokeColor = document.getElementById('colorPicker').value;
 }
 
+// function that updates pencil size
 function updateStrokeSize() {
     strokeSize = document.getElementById('thicknessPicker').value;
 }
 
-// function saveSticker() {
-//     var canvas = document.getElementById("myCanvas");
-//     var ctx = canvas.getContext("2d");
-
-//     // Set canvas background to transparent
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     ctx.fillStyle = 'rgba(0, 0, 0, 0)';
-//     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-//     // Draw your content onto the canvas
-//     ctx.fillStyle = "red";
-//     ctx.fillRect(50, 50, 100, 100);
-
-//     // Export the canvas content as a PNG
-//     var dataURL = canvas.toDataURL("image/png");
-
-//     // Create a temporary link and trigger a download
-//     var link = document.createElement('a');
-//     link.download = 'canvas.png';
-//     link.href = dataURL;
-//     link.click();
-// }
-
+// function for making a sticker
 function useAsSticker() {
-    // For demonstration purposes, you could create an image element and use it as a sticker
-    // if (drawingData) {
-        console.log("MAKING STICKER!!")
-        var sticker = new Image();
-        sticker.src = drawingData;
-        sticker.width = 100; // Adjust size as needed
-        sticker.height = 100;
-        sticker.draggable = true;
-        // localStorage.setItem('sticker', sticker);
-        sticker.addEventListener('dragstart', drag); // Set the drag event handler
-        // sticker.e.target.src = drawingData;
-        // sticker.ondragstart = drag(event);
-        // document.body.appendChild(sticker); // Add the sticker to the document
-        document.getElementById("imagePanel").appendChild(sticker);
-        storeStickerInLocalStorage(sticker.src);
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const imageSource = urlParams.get('bgImage');
-
-        // Check if imageSource is valid and load the background image
-        if (imageSource) {
-            console.log("reloading canvas");
-            loadCanvasBackground(imageSource);
-        }
-
-        // Reset the drawingData variable
-        drawingData = null;
-    // } else {
-    //     alert("Please draw something first!");
-    // }
+    var sticker = new Image();
+    sticker.src = drawingData;
+    sticker.width = 100;
+    sticker.height = 100;
+    sticker.draggable = true;
+    sticker.addEventListener('dragstart', drag);
+    document.getElementById("imagePanel").appendChild(sticker);
+    storeStickerInLocalStorage(sticker.src);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const urlParams = new URLSearchParams(window.location.search);
+    const imageSource = urlParams.get('bgImage');
+    if (imageSource) {
+        loadCanvasBackground(imageSource);
+    }
+    drawingData = null;
 }
 
-// Function to store sticker data in Local Storage
+// function to store sticker data in Local Storage
 function storeStickerInLocalStorage(stickerDataURL) {
     localStorage.setItem('sticker', stickerDataURL);
 }
 
-// Function to retrieve sticker data from Local Storage
+// function to retrieve sticker data from Local Storage
 function getStickerFromLocalStorage() {
     return localStorage.getItem('sticker');
 }
 
-// Function to load the stored sticker onto the canvas
+// function to load the stored sticker onto the canvas
 function loadStickerFromLocalStorage() {
-    console.log("LOADING STICKERS")
     const stickerDataURL = getStickerFromLocalStorage();
     if (stickerDataURL) {
         var sticker = new Image();
         sticker.onload = function() {
-            // Draw the sticker on the canvas
             ctx.drawImage(sticker, 0, 0, sticker.width, sticker.height);
         };
         sticker.src = stickerDataURL;
-        sticker.width = 100; // Adjust size as needed
+        sticker.width = 100;
         sticker.height = 100;
         sticker.draggable = true;
-        sticker.addEventListener('dragstart', drag); // Set the drag event handler
+        sticker.addEventListener('dragstart', drag);
         document.getElementById("imagePanel").appendChild(sticker);
-
-        console.log("STICKER HAD BEEN LOADED!!")
     }
 }
 
+// function that clears sticker from canvas
 function clearStickerFromLocalStorage() {
     localStorage.removeItem('sticker');
 }
