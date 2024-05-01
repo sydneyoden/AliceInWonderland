@@ -370,6 +370,8 @@ function useAsSticker() {
         // document.body.appendChild(sticker); // Add the sticker to the document
         document.getElementById("imagePanel").appendChild(sticker);
 
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
         const urlParams = new URLSearchParams(window.location.search);
         const imageSource = urlParams.get('bgImage');
 
