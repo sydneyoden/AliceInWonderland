@@ -64,6 +64,10 @@ button {
     bottom: 20px; /* Positions the button 20px from the bottom of the sidebar */
     background-color: #c1d6da;
 }
+.dreamButton {
+    bottom: 20px; /* Positions the button 20px from the bottom of the sidebar */
+    background-color: #dab3c4;
+}
 
 canvas {
     display: block;
@@ -101,10 +105,10 @@ img {
     margin-top: 152px;
     margin-left: 13px;
     position: absolute;
-    top: 100px;
+    top: 150px;
     left: 0;
-    width: 215px; /* Adjust the width as needed */
-    height: 300px;
+    width: 158px; /* Adjust the width as needed */
+    height: 375px;
     padding: 10px;
     background-color: #ded6ea;
     border: 1px solid #ccc;

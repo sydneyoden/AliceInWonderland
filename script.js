@@ -272,9 +272,9 @@ canvas.addEventListener('drop', function(e) {
 
         // Calculate the top-left corner position of the image so its center aligns with the drop location
         let imgCenterX = img.width / 2;
-        let imgBottomY = img.height;
+        let imgCenterY = img.height / 2;
         let x = dropX - imgCenterX;
-        let y = dropY - imgBottomY;
+        let y = dropY - imgCenterY;
 
         // Draw the image on the canvas at the calculated position
         ctx.drawImage(img, x, y, img.width, img.height);
