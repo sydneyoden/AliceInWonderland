@@ -50,7 +50,11 @@ function goToDrawingPage(event) {
         imageSource = 'src/transparent_bg.png';
     }
     if (imageSource) {
-        window.location.href = `drawing.html?bgImage=${encodeURIComponent(imageSource)}`;
+        if (buttonClass === 'button-home4'){
+            window.location.href = `stickerMaker.html?bgImage=${encodeURIComponent(imageSource)}`;
+        }else {
+            window.location.href = `drawing.html?bgImage=${encodeURIComponent(imageSource)}`;
+        }
     }
 }
 
@@ -62,6 +66,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (imageSource) {
         loadCanvasBackground(imageSource);
     }
+
+    // var stickerDataURL = localStorage.getItem('sticker');
+
+    // // Check if sticker data exists
+    // if (stickerDataURL) {
+    //     // Create an image element for the sticker
+    //     var sticker = new Image();
+    //     sticker.src = stickerDataURL;
+    //     sticker.width = 100; // Adjust size as needed
+    //     sticker.height = 100;
+    //     sticker.draggable = true;
+    //     localStorage.setItem('sticker', sticker);
+    //     sticker.addEventListener('dragstart', drag); // Set the drag event handler
+
+    //     // Add the sticker to the document
+    //     document.getElementById("imagePanel").appendChild(sticker);
+    // }
 });
 
 let canvas = document.getElementById('canvas');
@@ -333,7 +354,7 @@ function updateStrokeSize() {
 //     link.click();
 // }
 
-function useAsSticker(event) {
+function useAsSticker() {
     // For demonstration purposes, you could create an image element and use it as a sticker
     // if (drawingData) {
         console.log("MAKING STICKER!!")
@@ -342,11 +363,24 @@ function useAsSticker(event) {
         sticker.width = 100; // Adjust size as needed
         sticker.height = 100;
         sticker.draggable = true;
+        // localStorage.setItem('sticker', sticker);
         sticker.addEventListener('dragstart', drag); // Set the drag event handler
         // sticker.e.target.src = drawingData;
         // sticker.ondragstart = drag(event);
         // document.body.appendChild(sticker); // Add the sticker to the document
         document.getElementById("imagePanel").appendChild(sticker);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const imageSource = urlParams.get('bgImage');
+
+        // Check if imageSource is valid and load the background image
+        if (imageSource) {
+            console.log("reloading canvas");
+            loadCanvasBackground(imageSource);
+        }
+
+        // Reset the drawingData variable
+        drawingData = null;
     // } else {
     //     alert("Please draw something first!");
     // }
