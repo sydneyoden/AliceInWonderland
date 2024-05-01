@@ -16,10 +16,12 @@ h1 {
 
 .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-align: center;
-    margin-top: 50px;
-    max-width: 50%;
+    justify-content: space-evenly;
+    /* margin-top: 50px; */
+    width: 1000px;
+    margin: 50px;
 }
 
 .container input[type="text"] {
@@ -40,15 +42,27 @@ button {
 
 .button-home1 {
     display: block; /* Allow the button to be centered horizontally */
+    height: 75px;
+    width: 200px;
 }
 .button-home2 {
     display: block; /* Allow the button to be centered horizontally */
+    height: 75px;
+    width: 200px;
 }
 .button-home3 {
     display: block; /* Allow the button to be centered horizontally */
+    height: 75px;
+    width: 200px;
+}
+.button-home4 {
+    display: block; /* Allow the button to be centered horizontally */
+    height: 75px;
+    width: 200px;
 }
 .backButton {
     bottom: 20px; /* Positions the button 20px from the bottom of the sidebar */
+    background-color: #c1d6da;
 }
 
 canvas {
@@ -72,6 +86,11 @@ canvas {
 img { 
     width: 50px;
     height: 50px;
+}
+
+.imgmain {
+    width: 200px;
+    height: 200px;
 }
 
 .image-panel {
