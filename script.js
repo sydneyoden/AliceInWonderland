@@ -1,3 +1,5 @@
+var drawingData = null;
+
 function loadCanvasBackground(imageSrc) {
     // Create a new Image object
     const image = new Image();
@@ -45,7 +47,7 @@ function goToDrawingPage(event) {
         imageSource = 'src/office.png';
     }
     else if (buttonClass === 'button-home4') {
-        imageSource = 'src/white_bg.jpeg';
+        imageSource = 'src/transparent_bg.png';
     }
     if (imageSource) {
         window.location.href = `drawing.html?bgImage=${encodeURIComponent(imageSource)}`;
@@ -154,7 +156,11 @@ canvas.addEventListener('mousemove', function(e) {
 canvas.addEventListener('mouseup', function(e) {
     //console.log("mouseUp");
     if (tool === 'pencil' || tool === 'eraser') {
+        console.log("drawing STOPPED")
         stopDrawing(e);
+        setTimeout(function() {
+            drawingData = canvas.toDataURL("image/png");
+        }, 100); // Adjust delay time as needed
         //isDrawing = false;
     } else if (tool == 'move') {
         isDragging = false;
@@ -302,4 +308,46 @@ function updateStorkeColor() {
 
 function updateStrokeSize() {
     strokeSize = document.getElementById('thicknessPicker').value;
+}
+
+// function saveSticker() {
+//     var canvas = document.getElementById("myCanvas");
+//     var ctx = canvas.getContext("2d");
+
+//     // Set canvas background to transparent
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+//     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+//     // Draw your content onto the canvas
+//     ctx.fillStyle = "red";
+//     ctx.fillRect(50, 50, 100, 100);
+
+//     // Export the canvas content as a PNG
+//     var dataURL = canvas.toDataURL("image/png");
+
+//     // Create a temporary link and trigger a download
+//     var link = document.createElement('a');
+//     link.download = 'canvas.png';
+//     link.href = dataURL;
+//     link.click();
+// }
+
+function useAsSticker(event) {
+    // For demonstration purposes, you could create an image element and use it as a sticker
+    // if (drawingData) {
+        console.log("MAKING STICKER!!")
+        var sticker = new Image();
+        sticker.src = drawingData;
+        sticker.width = 100; // Adjust size as needed
+        sticker.height = 100;
+        sticker.draggable = true;
+        sticker.addEventListener('dragstart', drag); // Set the drag event handler
+        // sticker.e.target.src = drawingData;
+        // sticker.ondragstart = drag(event);
+        // document.body.appendChild(sticker); // Add the sticker to the document
+        document.getElementById("imagePanel").appendChild(sticker);
+    // } else {
+    //     alert("Please draw something first!");
+    // }
 }
