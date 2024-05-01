@@ -10,7 +10,7 @@
     <canvas id="canvas"></canvas>
     <div class="toolbar">
       <button class="backButton" onclick="goToIndexPage()">Back</button>
-      <button class="dreamButton" onclick="selectTool('dream')">Dream It!</button>
+      <button id="saveButton" class="dreamButton" onclick="selectTool('dream'), saveCanvasAsImage()">Dream It!</button>
       <div class="dropdown">
         <button
           onclick="toggleDropdown(), selectTool('pencil')"

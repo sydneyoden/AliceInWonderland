@@ -301,8 +301,19 @@ function openImagePanel() {
     }
 }
 
+function saveCanvasAsImage() {
+    const dataURL = canvas.toDataURL('image/png');
 
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = dataURL; // Set the href to the data URL
+    link.download = "Your_Day_Dream"; // Specify the filename for the download;
 
+    // Programmatically trigger a click on the link to download the image
+    link.click();
+}
+
+document.getElementById('saveButton').addEventListener('click', saveCanvasAsImage);
 
 function toggleDropdown() {
     var dropdown = document.getElementById("pencilDropdown");
