@@ -40,7 +40,7 @@ function goToDrawingPage(event) {
 
     // Determine the appropriate image source based on the button's class
     if (buttonClass === 'button-home1') {
-        imageSource = 'src/park.jpeg';
+        imageSource = 'src/park.png';
     } else if (buttonClass === 'button-home2') {
         imageSource = 'src/IMG_2301.png';
     } else if (buttonClass === 'button-home3') {
@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if imageSource is valid and load the background image
     if (imageSource) {
         loadCanvasBackground(imageSource);
+        loadStickerFromLocalStorage();
     }
 
     // var stickerDataURL = localStorage.getItem('sticker');
@@ -92,7 +93,7 @@ let isDrawing = false;
 let isDragging = false;
 
 let strokeColor = '#000';
-let strokeSize = 3;
+let strokeSize = 5;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -306,6 +307,14 @@ function openImagePanel() {
 function toggleDropdown() {
     var dropdown = document.getElementById("pencilDropdown");
     dropdown.classList.toggle("show");
+    if (pencilDropdown.style.display === 'none') {
+        pencilDropdown.style.display = 'block';
+        //console.log("==none");
+    } else {
+        pencilDropdown.style.display = 'none';
+        console.log("closing");
+    }
+    
 }
 
 // Close the dropdown if the user clicks outside of it
@@ -369,6 +378,7 @@ function useAsSticker() {
         // sticker.ondragstart = drag(event);
         // document.body.appendChild(sticker); // Add the sticker to the document
         document.getElementById("imagePanel").appendChild(sticker);
+        storeStickerInLocalStorage(sticker.src);
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -386,4 +396,39 @@ function useAsSticker() {
     // } else {
     //     alert("Please draw something first!");
     // }
+}
+
+// Function to store sticker data in Local Storage
+function storeStickerInLocalStorage(stickerDataURL) {
+    localStorage.setItem('sticker', stickerDataURL);
+}
+
+// Function to retrieve sticker data from Local Storage
+function getStickerFromLocalStorage() {
+    return localStorage.getItem('sticker');
+}
+
+// Function to load the stored sticker onto the canvas
+function loadStickerFromLocalStorage() {
+    console.log("LOADING STICKERS")
+    const stickerDataURL = getStickerFromLocalStorage();
+    if (stickerDataURL) {
+        var sticker = new Image();
+        sticker.onload = function() {
+            // Draw the sticker on the canvas
+            ctx.drawImage(sticker, 0, 0, sticker.width, sticker.height);
+        };
+        sticker.src = stickerDataURL;
+        sticker.width = 100; // Adjust size as needed
+        sticker.height = 100;
+        sticker.draggable = true;
+        sticker.addEventListener('dragstart', drag); // Set the drag event handler
+        document.getElementById("imagePanel").appendChild(sticker);
+
+        console.log("STICKER HAD BEEN LOADED!!")
+    }
+}
+
+function clearStickerFromLocalStorage() {
+    localStorage.removeItem('sticker');
 }
