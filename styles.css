@@ -1,7 +1,7 @@
 body {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items vertically */
+    align-items: center;
     margin: 0;
     padding: 0;
     background-color: #d1c1da;
@@ -9,9 +9,9 @@ body {
 
 h1 {
     font-size: 100px;
-    text-align: center; /* Center the text */
-    color: #504357; /* Dark purple color (indigo) */
-    font-family: 'Kristen ITC', cursive; /* Kristen ITC cursive font */
+    text-align: center;
+    color: #504357;
+    font-family: 'Kristen ITC', cursive;
 }
 
 .container {
@@ -19,53 +19,52 @@ h1 {
     flex-direction: row;
     text-align: center;
     justify-content: space-evenly;
-    /* margin-top: 50px; */
     width: 1000px;
     margin: 50px;
 }
 
 .container input[type="text"] {
-    width: 50%; /* Make the input element fill the entire width of the container */
-    padding: 10px; /* Add padding for spacing inside the input element */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 button {
     min-width: 100px;
     margin-bottom: 10px;
-    height: 50px; /* Adjust the height as desired */
-    font-family: 'Kristen ITC', cursive; /* Change the font family */
-    font-size: 20px; /* Change the font size */
+    height: 50px;
+    font-family: 'Kristen ITC', cursive;
+    font-size: 20px;
     color: #504357;
     background-color: #d1c1da;
 }
 
 .button-home1 {
-    display: block; /* Allow the button to be centered horizontally */
+    display: block;
     height: 75px;
     width: 200px;
 }
 .button-home2 {
-    display: block; /* Allow the button to be centered horizontally */
+    display: block;
     height: 75px;
     width: 200px;
 }
 .button-home3 {
-    display: block; /* Allow the button to be centered horizontally */
+    display: block;
     height: 75px;
     width: 200px;
 }
 .button-home4 {
-    display: block; /* Allow the button to be centered horizontally */
+    display: block;
     height: 75px;
     width: 200px;
 }
 .backButton {
-    bottom: 20px; /* Positions the button 20px from the bottom of the sidebar */
+    bottom: 20px;
     background-color: #c1d6da;
 }
 .dreamButton {
-    bottom: 20px; /* Positions the button 20px from the bottom of the sidebar */
+    bottom: 20px;
     background-color: #dab3c4;
 }
 
@@ -98,16 +97,16 @@ img {
 }
 
 .image-panel {
-    display: grid; /* Set the container to use a grid layout */
-    grid-template-columns: repeat(3, 50px); /* Create 3 columns with a fixed width of 50px each */
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
     grid-auto-rows: 50px;
-    gap: 10px; /* Gap between grid items */
+    gap: 10px;
     margin-top: 152px;
     margin-left: 13px;
     position: absolute;
     top: 150px;
     left: 0;
-    width: 158px; /* Adjust the width as needed */
+    width: 158px;
     height: 375px;
     padding: 10px;
     background-color: #ded6ea;
@@ -115,15 +114,11 @@ img {
 }
 
 .image-panel img {
-    /* display: block; */
     width: 50px;
     height: 50px;
     object-fit: cover;
 }
 
-
-  
-/* Dropdown content */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -133,6 +128,5 @@ img {
     z-index: 1;
 }
 
-/* Show the dropdown menu when the user clicks on the button */
 .show {display: block;}
   
